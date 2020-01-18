@@ -1,4 +1,3 @@
-// Modules to control application life and create native browser window
 const { app, Tray, Menu } = require('electron')
 const { exec } = require("child_process");
 const path = require('path')
@@ -20,9 +19,9 @@ function shellCallback(error, stdout, stderr) {
   console.log("DONE")
 }
 
-async function createApp() {
+function createApp() {
 
-  await createConfigFile()
+  createConfigFile()
 
   const configJson = readConfigFile()
   console.log("configJson", configJson)
@@ -39,24 +38,23 @@ async function createApp() {
 
 
 
-async function createConfigFile() {
+function createConfigFile() {
   console.log('homedir', homedirPath)
-  const path = `${homedirPath}/config.json`
-  fs.exists(path, exists => {
-    if (exists) {
-      console.log("Config file already exists");
-    } else {
+  const path = `${homedirPath}/bt-config.json`
 
-      fs.writeFile(path, configString, function (err) {
-        if (err) throw err;
-        console.log('Config file is created successfully.');
-      });
-    }
-  })
+  if (fs.existsSync(path)) {
+    console.log("Config file already exists");
+  } else {
+    fs.writeFileSync(path, configString, function (err) {
+      if (err) throw err;
+      console.log('Config file is created successfully.');
+    });
+  }
 }
 
 function readConfigFile() {
-  const configFile = path.join(homedirPath, 'config.json')
+  console.log("Reading config.")
+  const configFile = path.join(homedirPath, 'bt-config.json')
   let rawdata = fs.readFileSync(configFile);
   let configJson = JSON.parse(rawdata);
   return configJson
@@ -75,12 +73,8 @@ const executeBash = (scriptPath) => () => {
 const configString = `
 [
   {
-      "label": "Test SH",
-      "path": "/Users/klemenkunstek/desktop/test.sh"
+      "label": "Script label",
+      "path": "/path/to/script.sh"
   }
 ]
 `
-
-/* function showConfigFileMessage(message) {
-  dialog.showMessageBox(undefined, { type: "info", message })
-} */
