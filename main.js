@@ -1,9 +1,9 @@
-const { app, Tray, Menu } = require('electron')
+const { app, Tray, Menu, nativeTheme: { shouldUseDarkColors } } = require('electron')
 const { exec } = require("child_process");
 const path = require('path')
 const fs = require('fs');
 const { homedir } = require('os')
-const icon = 'code-terminal-white.png'
+const icon = shouldUseDarkColors ? 'code-terminal-white.png' : 'code-terminal-dark.png'
 const homedirPath = homedir()
 
 
