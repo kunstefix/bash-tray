@@ -1,11 +1,11 @@
-const { app, Tray, Menu, nativeTheme: { shouldUseDarkColors } } = require('electron')
+const { app, Notification, Tray, Menu, nativeTheme: { shouldUseDarkColors }, BrowserWindow } = require('electron')
 const { exec } = require("child_process");
 const path = require('path')
 const fs = require('fs');
 const { homedir } = require('os')
 const icon = shouldUseDarkColors ? 'code-terminal-white.png' : 'code-terminal-dark.png'
 const homedirPath = homedir()
-
+let tray = null
 
 app.dock.hide()
 app.on('ready', createApp)
@@ -32,7 +32,7 @@ function createApp() {
   const contextMenu = Menu.buildFromTemplate(menuTemplate)
   console.log("contextMenu", contextMenu)
 
-  const tray = new Tray(path.join(__dirname, icon))
+  tray = new Tray(path.join(__dirname, icon))
   tray.setContextMenu(contextMenu)
 }
 
@@ -62,6 +62,11 @@ function readConfigFile() {
 
 function getMenuTemplate(configJson) {
   const template = configJson.map(obj => ({ label: obj.label, click: executeBash(obj.path) }))
+  template.push({
+    label: "Quit",
+    click: () => app.quit()
+  })
+
   return template
 }
 
