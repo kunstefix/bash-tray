@@ -1,4 +1,4 @@
-const { app, Notification, Tray, Menu, nativeTheme: { shouldUseDarkColors }, BrowserWindow } = require('electron')
+const { app, Tray, Menu, nativeTheme: { shouldUseDarkColors }, BrowserWindow } = require('electron')
 const { exec } = require("child_process");
 const path = require('path')
 const fs = require('fs');
@@ -15,23 +15,16 @@ app.setLoginItemSettings({
 
 
 function shellCallback(error, stdout, stderr) {
-  console.log(error, stdout)
+  console.log(error, stdout, stderr)
   console.log("DONE")
+
 }
 
 function createApp() {
-
   createConfigFile()
-
   const configJson = readConfigFile()
-  console.log("configJson", configJson)
-
   const menuTemplate = getMenuTemplate(configJson)
-  console.log("menuTemplate", menuTemplate)
-
   const contextMenu = Menu.buildFromTemplate(menuTemplate)
-  console.log("contextMenu", contextMenu)
-
   tray = new Tray(path.join(__dirname, icon))
   tray.setContextMenu(contextMenu)
 }
@@ -39,21 +32,16 @@ function createApp() {
 
 
 function createConfigFile() {
-  console.log('homedir', homedirPath)
   const path = `${homedirPath}/bt-config.json`
-
   if (fs.existsSync(path)) {
-    console.log("Config file already exists");
   } else {
     fs.writeFileSync(path, configString, function (err) {
       if (err) throw err;
-      console.log('Config file is created successfully.');
     });
   }
 }
 
 function readConfigFile() {
-  console.log("Reading config.")
   const configFile = path.join(homedirPath, 'bt-config.json')
   let rawdata = fs.readFileSync(configFile);
   let configJson = JSON.parse(rawdata);
