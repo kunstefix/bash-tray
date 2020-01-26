@@ -45,6 +45,7 @@
     "electron": "^7.1.9"
   },
   "dependencies": {
+    "electron-builder": "^22.3.2",
     "electron-log": "^4.0.3",
     "shell-path": "^2.1.0"
   }
