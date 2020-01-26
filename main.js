@@ -4,7 +4,7 @@ const path = require('path')
 const fs = require('fs');
 const { homedir } = require('os')
 
-const icon = shouldUseDarkColors ? 'code-terminal-white.png' : 'code-terminal-dark.png'
+const icon = shouldUseDarkColors ? 'tray-icon-white.png' : 'tray-icon-dark.png'
 const homedirPath = homedir()
 let tray = null
 const configString = `
