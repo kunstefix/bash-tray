@@ -3,22 +3,26 @@ const { exec } = require("child_process");
 const path = require('path')
 const fs = require('fs');
 const { homedir } = require('os')
+
 const icon = shouldUseDarkColors ? 'code-terminal-white.png' : 'code-terminal-dark.png'
 const homedirPath = homedir()
 let tray = null
+const configString = `
+[
+  {
+      "label": "Script label",
+      "path": "/path/to/script.sh"
+  }
+]
+`
 
+ initLog()
+fixPath();
 app.dock.hide()
 app.on('ready', createApp)
 app.setLoginItemSettings({
   openAtLogin: true
 })
-
-
-function shellCallback(error, stdout, stderr) {
-  console.log(error, stdout, stderr)
-  console.log("DONE")
-
-}
 
 function createApp() {
   createConfigFile()
@@ -28,8 +32,6 @@ function createApp() {
   tray = new Tray(path.join(__dirname, icon))
   tray.setContextMenu(contextMenu)
 }
-
-
 
 function createConfigFile() {
   const path = `${homedirPath}/bt-config.json`
@@ -49,7 +51,7 @@ function readConfigFile() {
 }
 
 function getMenuTemplate(configJson) {
-  const template = configJson.map(obj => ({ label: obj.label, click: executeBash(obj.path) }))
+  const template = configJson.map(obj => ({ label: obj.label, click: () => executeBash(obj.path) }))
   template.push({
     label: "Quit",
     click: () => app.quit()
@@ -58,16 +60,35 @@ function getMenuTemplate(configJson) {
   return template
 }
 
-const executeBash = (scriptPath) => () => {
-  exec(scriptPath, shellCallback);
+function executeBash(scriptPath) {
+  exec(scriptPath, execCallback);
+}
+
+function execCallback(error, stdout, stderr) {
+  console.log(error, stdout, stderr)
+  console.log("DONE")
 }
 
 
-const configString = `
-[
-  {
-      "label": "Script label",
-      "path": "/path/to/script.sh"
+function fixPath() {
+  const shellPath = require('shell-path');
+  if (process.platform !== 'darwin') {
+    return;
   }
-]
-`
+
+  process.env.PATH = shellPath.sync() || [
+    './node_modules/.bin',
+    '/.nodebrew/current/bin',
+    '/usr/local/bin',
+    process.env.PATH
+  ].join(':');
+};
+
+function initLog() {
+  const log = require('electron-log');
+  Object.assign(console, log.functions);
+  log.transports.file.file = __dirname + 'log.log';
+  log.info('Started app');
+};
+
+
