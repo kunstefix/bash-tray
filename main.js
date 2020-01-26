@@ -16,7 +16,7 @@ const configString = `
 ]
 `
 
- initLog()
+// initLog()
 fixPath();
 app.dock.hide()
 app.on('ready', createApp)
@@ -52,10 +52,10 @@ function readConfigFile() {
 
 function getMenuTemplate(configJson) {
   const template = configJson.map(obj => ({ label: obj.label, click: () => executeBash(obj.path) }))
-  template.push({
-    label: "Quit",
-    click: () => app.quit()
-  })
+  template.push(
+    { type: 'separator' },
+    { label: "Quit", click: () => app.quit() }
+  )
 
   return template
 }
