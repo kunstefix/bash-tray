@@ -42,7 +42,7 @@
     "Tray",
     "bash"
   ],
-  "license": "CC0-1.0",
+  "license": "MIT",
   "devDependencies": {
     "electron": "^7.1.9",
     "electron-builder": "^22.3.2"

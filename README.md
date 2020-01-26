@@ -1,46 +1,34 @@
-# electron-quick-start
+# BashTray
 
-**Clone and run for a quick way to see Electron in action.**
+BashTray is a macOS desktop application for running bash script from system tray menu.
 
-This is a minimal Electron application based on the [Quick Start Guide](https://electronjs.org/docs/tutorial/quick-start) within the Electron documentation.
+## Installation
 
-**Use this app along with the [Electron API Demos](https://electronjs.org/#get-started) app for API code examples to help you get started.**
+Download is available [here](https://github.com/kunstefix/bash-tray/releases/tag/untagged-7a8482a1f99591a2925e).
 
-A basic Electron application needs just these files:
+## Usage
+After running the application for the first time, the app will create a `bt-config.json` file in you home directory. Edit this file to configure tray menu. Restart app to refresh apply changed configuration.
 
-- `package.json` - Points to the app's main file and lists its details and dependencies.
-- `main.js` - Starts the app and creates a browser window to render HTML. This is the app's **main process**.
-- `index.html` - A web page to render. This is the app's **renderer process**.
-
-You can learn more about each of these components within the [Quick Start Guide](https://electronjs.org/docs/tutorial/quick-start).
-
-## To Use
-
-To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
-
-```bash
-# Clone this repository
-git clone https://github.com/electron/electron-quick-start
-# Go into the repository
-cd electron-quick-start
-# Install dependencies
-npm install
-# Run the app
-npm start
+Example file content:
+```
+[
+  {
+    "label": "Script number 1",
+    "path": "/path/to/script1.sh"
+  },
+  {
+    "label": "Script number 2",
+    "path": "/path/to/script2.sh"
+  }
+]
 ```
 
-Note: If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or use `node` from the command prompt.
+Will result in:
 
-## Resources for Learning Electron
+![Screenshot](readme-screenshot.png)
 
-- [electronjs.org/docs](https://electronjs.org/docs) - all of Electron's documentation
-- [electronjs.org/community#boilerplates](https://electronjs.org/community#boilerplates) - sample starter apps created by the community
-- [electron/electron-quick-start](https://github.com/electron/electron-quick-start) - a very basic starter Electron app
-- [electron/simple-samples](https://github.com/electron/simple-samples) - small applications with ideas for taking them further
-- [electron/electron-api-demos](https://github.com/electron/electron-api-demos) - an Electron app that teaches you how to use Electron
-- [hokein/electron-sample-apps](https://github.com/hokein/electron-sample-apps) - small demo apps for the various Electron APIs
 
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 ## License
-
-[CC0 1.0 (Public Domain)](LICENSE.md)
-# bash-tray
+[MIT](https://choosealicense.com/licenses/mit/)
