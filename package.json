@@ -1,6 +1,6 @@
 {
   "name": "bash-tray",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A minimal macOS tray application for running bash scripts.",
   "author": "Klemen Kunstek",
   "main": "main.js",
