@@ -31,6 +31,8 @@
     "start": "electron .",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
+    "build": "electron-builder --mac",
+    "release": "electron-builder --mac --publish always",
     "postinstall": "electron-builder install-app-deps"
   },
   "repository": "https://github.com/kunstefix/bash-tray",
