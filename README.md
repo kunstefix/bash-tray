@@ -17,6 +17,9 @@ Example file content:
     "path": "/path/to/script1.sh"
   },
   {
+    "type": "separator"
+  }
+  {
     "label": "Script number 2",
     "path": "/path/to/script2.sh"
   }
