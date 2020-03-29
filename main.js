@@ -51,7 +51,7 @@ function readConfigFile() {
 }
 
 function getMenuTemplate(configJson) {
-  const template = configJson.map(obj => ({ label: obj.label, click: () => executeBash(obj.path) }))
+  const template = configJson.map(obj => (obj.type === 'separator' ? { type: 'separator' } : { label: obj.label, click: () => executeBash(obj.path) }))
   template.push(
     { type: 'separator' },
     { label: "Quit", click: () => app.quit() }
